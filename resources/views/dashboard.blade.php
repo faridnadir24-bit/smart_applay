@@ -1,17 +1,28 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.adminlte4.main')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
+@push('css')
+@endpush
+
+@section('header', 'Dashboard')
+
+@section('content')
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Selamat Datang di SmartApply! 👋</h5>
+                <p class="card-text">
+                    Halo, <strong>{{ Auth::user()->name }}</strong>!
+                    Silakan lengkapi biodata kamu untuk mulai menggunakan SmartApply.
+                </p>
+                <a href="{{ route('applicant.biodata') }}" class="btn btn-primary">
+                    <i class="bi bi-person-lines-fill"></i> Lengkapi Biodata
+                </a>
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>
+@endsection
+
+@push('js')
+@endpush
