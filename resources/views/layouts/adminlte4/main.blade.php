@@ -38,7 +38,7 @@
       crossorigin="anonymous"
     />
     <!--end::Third Party Plugin(Bootstrap Icons)-->
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-rc7/dist/css/adminlte.min.css">
     @vite(['resources/css/adminlte-custom.css', 'resources/js/adminlte-custom.js'])
     @stack('css')
   </head>
