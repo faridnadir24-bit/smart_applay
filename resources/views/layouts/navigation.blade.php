@@ -18,6 +18,12 @@
                     <x-nav-link :href="route('applicant.biodata')" :active="request()->routeIs('applicant.biodata')">
                         {{ __('Biodata') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.*')">
+                        {{ __('Lowongan') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('applications.index')" :active="request()->routeIs('applications.*')">
+                        {{ __('Lamaran Saya') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -37,7 +43,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('applicant.biodata')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
@@ -73,6 +79,12 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.*')">
+                {{ __('Lowongan') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('applications.index')" :active="request()->routeIs('applications.*')">
+                {{ __('Lamaran Saya') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -83,7 +95,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link :href="route('applicant.biodata')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 

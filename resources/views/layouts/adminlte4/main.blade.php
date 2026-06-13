@@ -132,6 +132,18 @@
                     <p>Biodata</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{ route('jobs.index') }}" class="nav-link {{ Request::routeIs('jobs.*') ? 'active' : '' }}">
+                    <i class="nav-icon bi bi-briefcase-fill"></i>
+                    <p>Lowongan Kerja</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('applications.index') }}" class="nav-link {{ Request::routeIs('applications.*') ? 'active' : '' }}">
+                    <i class="nav-icon bi bi-file-earmark-text-fill"></i>
+                    <p>Lamaran Saya</p>
+                  </a>
+                </li>
               @endif
             </ul>
           </nav>

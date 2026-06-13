@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\JobListing;
+use App\Models\Application;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class JobListingController extends Controller
+{
+    // Tampilkan semua lowongan
+    public function index(Request $request)
+    {
+        $query = JobListing::query();
+
+        // Fitur search
+        if ($request->has('search') && $request->search != '') {
+            $query->where('title', 'like', '%' . $request->search . '%')
+                  ->orWhere('company', 'like', '%' . $request->search . '%')
+                  ->orWhere('location', 'like', '%' . $request->search . '%');
+        }
+
+        // Fitur filter tipe
+        if ($request->has('type') && $request->type != '') {
+            $query->where('type', $request->type);
+        }
+
+        $jobs = $query->latest()->paginate(6);
+
+        return view('jobs.index', compact('jobs'));
+    }
+
+    // Tampilkan detail lowongan
+    public function show(JobListing $jobListing)
+    {
+        $hasApplied = false;
+
+        if (Auth::check()) {
+            $hasApplied = Application::where('user_id', Auth::id())
+                ->where('job_listing_id', $jobListing->id)
+                ->exists();
+        }
+
+        return view('jobs.show', compact('jobListing', 'hasApplied'));
+    }
+
+    // Proses submit lamaran
+    public function apply(Request $request, JobListing $jobListing)
+    {
+        // Cek sudah pernah melamar
+        $alreadyApplied = Application::where('user_id', Auth::id())
+            ->where('job_listing_id', $jobListing->id)
+            ->exists();
+
+        if ($alreadyApplied) {
+            return redirect()->back()->with('error', 'Kamu sudah melamar pekerjaan ini!');
+        }
+
+        $request->validate([
+            'cover_letter' => 'required|min:20',
+        ]);
+
+        Application::create([
+            'user_id' => Auth::id(),
+            'job_listing_id' => $jobListing->id,
+            'status' => 'pending',
+            'cover_letter' => $request->cover_letter,
+        ]);
+
+        return redirect()->route('applications.index')->with('success', 'Lamaran berhasil dikirim!');
+    }
+}
