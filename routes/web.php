@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicantProfileController;
+use App\Http\Controllers\JobListingController;
+use App\Http\Controllers\ApplicationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,4 +39,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::get('/admin/pelamar', [AdminController::class, 'pelamarIndex'])
     ->name('admin.pelamar.index');
+
+// Routes LOWONGAN & LAMARAN (Mhs 2)
+Route::get('/jobs', [JobListingController::class, 'index'])->name('jobs.index');
+Route::get('/jobs/{jobListing}', [JobListingController::class, 'show'])->name('jobs.show');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/jobs/{jobListing}/apply', [JobListingController::class, 'apply'])->name('jobs.apply');
+    Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
+});
+
 require __DIR__.'/auth.php';
