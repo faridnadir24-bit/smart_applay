@@ -59,6 +59,7 @@ class JobListingController extends Controller
 
         $request->validate([
             'cover_letter' => 'required|min:20',
+            'expected_salary' => 'nullable|string|max:100',
         ]);
 
         Application::create([
@@ -66,6 +67,7 @@ class JobListingController extends Controller
             'job_listing_id' => $jobListing->id,
             'status' => 'pending',
             'cover_letter' => $request->cover_letter,
+            'expected_salary' => $request->expected_salary,
         ]);
 
         return redirect()->route('applications.index')->with('success', 'Lamaran berhasil dikirim!');
